@@ -20,6 +20,8 @@ import ast
 import logging
 import operator
 
+from virttest.vt_resmgr import resmgr
+
 from . import ClusterError, cluster, node_metadata
 
 LOG = logging.getLogger("avocado." + __name__)
@@ -93,6 +95,8 @@ class _Operator(object):
 
     @staticmethod
     def _contains(left, right):
+        if isinstance(right, list):
+            return set(left).issuperset(right)
         return operator.contains(left, right)
 
     @staticmethod
